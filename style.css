@@ -1,11 +1,14 @@
 /* Base stylesheet for main.html */
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 /* Global page settings */
 :root {
-  --bg-color: #EFEFFF;
+  --bg-color: #EFF5FF;
   --text-color: #101110;
   --accent-color: #3b82f6;
   --surface-color: #ffffff;
+  --surface-soft: #f8fbff;
   --border-color: #d6e4f0;
 }
 
@@ -19,7 +22,7 @@ html {
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
   background: var(--bg-color);
   color: var(--text-color);
@@ -28,24 +31,41 @@ body {
 
 /* Header with title and navigation */
 .site-header {
-  background: var(--surface-color);
-  border-bottom: 2px solid var(--border-color);
-  box-shadow: 0 2px 8px rgba(16, 42, 67, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.15);
+  box-shadow: 0 20px 40px rgba(16, 42, 67, 0.08);
 }
 
+.content-section {
+  margin-bottom: 2rem;
+}
+
+.content-section h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  margin-bottom: 0.75rem;
+}
+
+
+
 .header-container {
-  max-width: 100%;
-  padding: 1.5rem 1.25rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.25rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .site-header h1 {
   margin: 0;
-  font-size: 1.75rem;
-  flex-shrink: 0;
+  font-size: clamp(1.9rem, 2.5vw, 2.7rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
 }
 
 /* Navigation menu */
@@ -54,19 +74,33 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .nav-menu a {
-  font-weight: 500;
-  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0f172a;
+  background: rgba(59, 130, 246, 0.08);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .nav-menu a:hover,
 .nav-menu a:focus {
   color: var(--accent-color);
+  background: rgba(59, 130, 246, 0.16);
+  transform: translateY(-1px);
   text-decoration: none;
+}
+
+.nav-menu a:active {
+  transform: translateY(0);
 }
 
 /* Full-width video section */
@@ -81,6 +115,102 @@ body {
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* Hero sections with unique visuals */
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.hero-content h1 {
+  color: white;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+/* Services page gradient */
+.services-hero {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+}
+
+.services-hero .hero-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%);
+  animation: float 6s ease-in-out infinite;
+}
+
+/* About page pattern */
+.about-hero {
+  background: linear-gradient(45deg, #1e3a8a 0%, #3b82f6 50%, #0ea5e9 100%);
+}
+
+.about-hero .hero-pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%);
+  background-size: 40px 40px;
+  background-position: 0 0, 20px 20px;
+  animation: slide 20s linear infinite;
+}
+
+/* Contact page mesh gradient */
+.contact-hero {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #4facfe 100%);
+}
+
+.contact-hero .hero-mesh {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.1) 0%, transparent 40%);
+  animation: pulse 8s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes slide {
+  0% { background-position: 0 0, 20px 20px; }
+  100% { background-position: 40px 40px, 60px 60px; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.95; }
 }
 
 /* Page container for centered content */
