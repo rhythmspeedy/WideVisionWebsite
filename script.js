@@ -1,68 +1,23 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const hoverTargets = document.querySelectorAll('.nav-menu a, button, .button');
-
-  hoverTargets.forEach(target => {
-    target.addEventListener('mouseenter', () => {
-      target.classList.add('hover-active');
-    });
-
-    target.addEventListener('mouseleave', () => {
-      target.classList.remove('hover-active');
-    });
-
-    target.addEventListener('focus', () => {
-      target.classList.add('hover-active');
-    });
-
-    target.addEventListener('blur', () => {
-      target.classList.remove('hover-active');
-    });
+(() => {
+  const header = document.querySelector('.site-header');
+  const toggle = document.querySelector('.nav-toggle');
+  const nav = document.querySelector('.nav-menu');
+  const updateHeader = () => header?.classList.toggle('scrolled', window.scrollY > 24);
+  updateHeader();
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    nav?.classList.toggle('is-open', !isOpen);
   });
-
-  // Accordion functionality
-  const accordionHeaders = document.querySelectorAll('.accordion-header');
-
-  accordionHeaders.forEach(header => {
-    header.addEventListener('click', () => {
-      const accordionItem = header.parentElement;
-      const accordionContent = accordionItem.querySelector('.accordion-content');
-
-      // Toggle the open state on the item and content
-      accordionItem.classList.toggle('open');
-      accordionContent.classList.toggle('open');
-    });
-  });
-});
-
-// Header shrink on scroll
-const siteHeader = document.querySelector('.site-header');
-const scrollThreshold = 35;
-const parallaxLayers = document.querySelectorAll('.parallax-layer');
-
-const updateParallax = () => {
-  const scrollY = window.scrollY;
-
-  parallaxLayers.forEach(layer => {
-    const speed = parseFloat(layer.dataset.parallaxSpeed || '0.2');
-    layer.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
-  });
-};
-
-window.addEventListener('scroll', () => {
-  if (siteHeader) {
-    if (window.scrollY > scrollThreshold) {
-      siteHeader.classList.add('scrolled');
-    } else {
-      siteHeader.classList.remove('scrolled');
-    }
-  }
-
-  const scrollOffset = window.scrollY * 0.08;
-  document.querySelectorAll('.content-section').forEach((section, index) => {
-    section.style.setProperty('--scroll-offset', (index % 2 === 0 ? 1 : -1) * scrollOffset);
-  });
-
-  updateParallax();
-}, { passive: true });
-
-updateParallax();
+  nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+    toggle?.setAttribute('aria-expanded', 'false');
+    nav.classList.remove('is-open');
+  }));
+  document.querySelectorAll('[data-current-year]').forEach((node) => { node.textContent = new Date().getFullYear(); });
+  const items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: .12 });
+    items.forEach((item) => observer.observe(item));
+  } else { items.forEach((item) => item.classList.add('is-visible')); }
+})();
